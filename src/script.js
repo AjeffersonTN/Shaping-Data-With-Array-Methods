@@ -1,5 +1,6 @@
 let putOnDOM = document.querySelector("#output")
 let putOnDOM2 = document.querySelector("#output2")
+let putOnDOM3 = document.querySelector("#output3")
 //fetch the database.json
 fetch(`http://localhost:3000/businesses`)
     .then(response => response.json())
@@ -32,8 +33,8 @@ fetch(`http://localhost:3000/businesses`)
         return manBusiness
     })
     putOnDOM2.innerHTML = "<h1>Manufacturing Businesses</h1>"
-    console.log(manufacturingBusinesses[0].companyName)
-        manufacturingBusinesses.forEach(business => {console.log(business)
+
+        manufacturingBusinesses.forEach(business => {
         putOnDOM2.innerHTML += `
         <h2>${business.companyName}</h2>
         <section>
@@ -47,3 +48,24 @@ fetch(`http://localhost:3000/businesses`)
         });
 
 })
+//map purchasing agent, company , phone number
+//fetch the database.json
+fetch(`http://localhost:3000/businesses`)
+    .then(response => response.json())
+    .then(businesses => {
+        let agents = businesses.map(business => {
+            return `
+            "fullName": ${business.purchasingAgent.nameFirst} ${business.purchasingAgent.nameLast},<br>
+            "company": ${business.companyName},<br>
+            "phoneNumber"${business.phoneWork}
+            `
+            })
+            // console.log(agents)
+        putOnDOM3.innerHTML = "<h1>Purchasing Agents</h1>"
+
+           agents.forEach(agent => {console.table(agents)
+            putOnDOM3.innerHTML += agent
+
+            putOnDOM3.innerHTML += "<hr/>"
+           })
+        })
