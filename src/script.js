@@ -57,7 +57,7 @@ fetch(`http://localhost:3000/businesses`)
             return `
             "fullName": ${business.purchasingAgent.nameFirst} ${business.purchasingAgent.nameLast},<br>
             "company": ${business.companyName},<br>
-            "phoneNumber"${business.phoneWork}
+            "phoneNumber": ${business.phoneWork}
             `
             })
             // console.log(agents)
