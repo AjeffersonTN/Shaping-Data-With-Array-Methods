@@ -1,6 +1,7 @@
 let putOnDOM = document.querySelector("#output")
 let putOnDOM2 = document.querySelector("#output2")
 let putOnDOM3 = document.querySelector("#output3")
+let putOnDOM4 = document.querySelector("#output4")
 //fetch the database.json
 fetch(`http://localhost:3000/businesses`)
     .then(response => response.json())
@@ -63,9 +64,35 @@ fetch(`http://localhost:3000/businesses`)
             // console.log(agents)
         putOnDOM3.innerHTML = "<h1>Purchasing Agents</h1>"
 
-           agents.forEach(agent => {console.table(agents)
+           agents.forEach(agent => {
             putOnDOM3.innerHTML += agent
 
             putOnDOM3.innerHTML += "<hr/>"
            })
         })
+
+//.find section for purchasing agents
+fetch(`http://localhost:3000/businesses`)
+    .then(response => response.json())
+    .then(businesses => {
+        document.querySelector("#agentSearch").addEventListener("keypress", keyPressEvent => {
+                if (keyPressEvent.charCode === 13) {
+            let foundAgent = businesses.find(business => {
+            let userSearch = keyPressEvent.target.value.toUpperCase()
+            if (business.purchasingAgent.nameFirst.toUpperCase().includes(userSearch) || business.purchasingAgent.nameLast.toUpperCase().includes(userSearch))
+
+            return userSearch
+
+        })
+console.log(foundAgent)
+            putOnDOM4.innerHTML += `
+                <h2>
+                Found Purchasing Agent for: ${foundAgent.companyName}
+                </h2>
+                <section>
+               Name: ${foundAgent.purchasingAgent.nameFirst} ${foundAgent.purchasingAgent.nameLast}
+               Phone Number: ${foundAgent.phoneWork}
+                `
+        }
+    })
+    });
