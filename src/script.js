@@ -2,6 +2,7 @@ let putOnDOM = document.querySelector("#output")
 let putOnDOM2 = document.querySelector("#output2")
 let putOnDOM3 = document.querySelector("#output3")
 let putOnDOM4 = document.querySelector("#output4")
+let putOnDOM5 = document.querySelector("#output5")
 //fetch the database.json
 fetch(`http://localhost:3000/businesses`)
     .then(response => response.json())
@@ -114,3 +115,30 @@ const words = ["The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", 
 const sentence = words.reduce((currentWord, nextWord) => currentWord + " " + nextWord)
 
 console.log(sentence)
+
+//Big Spenders Array with companies that have placed an order for more than nine thousand dollars.
+
+fetch(`http://localhost:3000/businesses`)
+    .then(response => response.json())
+    .then(businesses => {
+       const bigSpenders = businesses.filter(business => {
+           if (business.orders.find(order => {
+               return order > 9000
+           }))
+           {
+               return business
+           }
+       })
+       console.log(bigSpenders)
+       putOnDOM5.innerHTML = "<h2>Big Spenders:</h2>"
+       bigSpenders.forEach(business => {
+
+           putOnDOM5.innerHTML += `
+           
+           <section>Company Name: ${business.companyName}
+           </section>
+           `
+       })
+        })
+
+  
